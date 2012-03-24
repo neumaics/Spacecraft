@@ -59,7 +59,7 @@ public class LWJGLDemo {
   public static Cube cube;  
   
   public static void main(String[] args) {
-    Viewer viewer = new Viewer.Builder("Spacecraft").width( WINDOW_WIDTH ).height( WINDOW_HEIGHT ).build();
+    Viewer viewer = new Viewer.Builder( WINDOW_NAME ).width( WINDOW_WIDTH ).height( WINDOW_HEIGHT ).build();
     initVariables();
     initProjection();
     initLightsource();
