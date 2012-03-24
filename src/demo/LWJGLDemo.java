@@ -14,6 +14,8 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import viewer.Viewer;
+
 
 public class LWJGLDemo {
   // Assorted constants
@@ -57,7 +59,7 @@ public class LWJGLDemo {
   public static Cube cube;  
   
   public static void main(String[] args) {
-    initDisplay();
+    Viewer viewer = new Viewer.Builder("Spacecraft").width( WINDOW_WIDTH ).height( WINDOW_HEIGHT ).build();
     initVariables();
     initProjection();
     initLightsource();
@@ -66,21 +68,6 @@ public class LWJGLDemo {
     cube = new Cube();
     
     start();
-  }
-  
-  public static void initDisplay(){
-    
-    try {
-      Display.setDisplayMode(new DisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT));
-      Display.create();
-    } catch (LWJGLException e) {
-      e.printStackTrace();
-      System.exit(0);
-    }
-    
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glEnable(GL_DEPTH_TEST);
   }
   
   public static void initVariables() {

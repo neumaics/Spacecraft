@@ -1,5 +1,15 @@
 package viewer;
 
+import static org.lwjgl.opengl.GL11.GL_BACK;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.glCullFace;
+import static org.lwjgl.opengl.GL11.glEnable;
+
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
 public class Viewer {
   private int width;
   private int height;
@@ -35,6 +45,23 @@ public class Viewer {
     this.name = builder.name;
     this.height = builder.height;
     this.width = builder.width;
+    init();
+  }
+
+  private void init()
+  {
+    try {
+      Display.setDisplayMode(new DisplayMode(width, height));
+      Display.create();
+    } catch (LWJGLException e) {
+      e.printStackTrace();
+      System.exit(0);
+    }
+    
+    //TODO(mitch) Should these be changeable from outside the Viewer?
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glEnable(GL_DEPTH_TEST);
   }
 
   public int getWidth()
