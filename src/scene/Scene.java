@@ -1,4 +1,9 @@
 package scene;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * This class should be the collection of the objects visible in the world at any given time. It 
  * includes:
@@ -17,5 +22,13 @@ package scene;
  *
  */
 public class Scene {
-
+  private Collection<Node> scene_objects;
+  public Scene()
+  {
+    scene_objects = new ArrayList<Node>();
+  }
+  public void attach( Node node )
+  {
+    scene_objects.add( node );
+  }
 }
