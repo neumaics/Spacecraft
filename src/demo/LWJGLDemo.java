@@ -1,5 +1,6 @@
 package demo;
 
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 
@@ -14,8 +15,7 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import viewer.Viewer;
-
+import game.*;
 
 public class LWJGLDemo {
   // Assorted constants
