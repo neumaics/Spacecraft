@@ -5,10 +5,10 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 public class Viewer {
-  private int width;
-  private int height;
-  private boolean fullscreen;
-  private String name;
+  private static int width;
+  private static int height;
+  private static boolean fullscreen;
+  private static String name;
   
   public static class Builder {
     //Required parameters
@@ -42,17 +42,18 @@ public class Viewer {
   }
   
   private Viewer( Builder builder ) {
-    this.name = builder.name;
-    this.height = builder.height;
-    this.width = builder.width;
-    this.fullscreen = builder.fullscreen;
+    Viewer.name = builder.name;
+    Viewer.height = builder.height;
+    Viewer.width = builder.width;
+    Viewer.fullscreen = builder.fullscreen;
     init();
   }
 
-  private void init()
+  private static void init()
   {
     try 
     {
+      Display.setTitle(name);
       Display.setDisplayMode(new DisplayMode(width, height));
       Display.setFullscreen(fullscreen);
       Display.create();
@@ -64,7 +65,7 @@ public class Viewer {
     }
   }
   
-  public void toggleFullscreen()
+  public static void toggleFullscreen()
   {
     fullscreen = !fullscreen;
     try
@@ -83,10 +84,25 @@ public class Viewer {
    * Assuming that the width or height has changed, this will destroy the 
    * current display, then make a new one based off of the new values.
    */
-  public void changeScreenDimensions()
+  public static void changeScreenDimensions()
   {
     Display.destroy();
     init();
+  }
+  
+  public static void update()
+  {
+    Display.update();
+  }
+  
+  public static boolean isCloseRequested()
+  {
+    return Display.isCloseRequested();
+  }
+  
+  public static void cleanUp()
+  {
+    Display.destroy();
   }
   
   public int getWidth()
@@ -96,7 +112,7 @@ public class Viewer {
 
   public void setWidth(int width)
   {
-    this.width = width;
+    Viewer.width = width;
   }
 
   public int getHeight()
@@ -106,7 +122,7 @@ public class Viewer {
 
   public void setHeight(int height)
   {
-    this.height = height;
+    Viewer.height = height;
   }
 
   public String getName()
@@ -116,7 +132,7 @@ public class Viewer {
 
   public void setName(String name)
   {
-    this.name = name;
+    Viewer.name = name;
   }
   
 }
