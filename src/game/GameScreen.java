@@ -4,7 +4,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-public class Viewer {
+public class GameScreen {
   private static int width;
   private static int height;
   private static boolean fullscreen;
@@ -35,17 +35,17 @@ public class Viewer {
     {
       this.fullscreen = fullscreen; return this;
     }
-    public Viewer build()
+    public GameScreen build()
     {
-      return new Viewer( this );
+      return new GameScreen( this );
     }
   }
   
-  private Viewer( Builder builder ) {
-    Viewer.name = builder.name;
-    Viewer.height = builder.height;
-    Viewer.width = builder.width;
-    Viewer.fullscreen = builder.fullscreen;
+  private GameScreen( Builder builder ) {
+    GameScreen.name = builder.name;
+    GameScreen.height = builder.height;
+    GameScreen.width = builder.width;
+    GameScreen.fullscreen = builder.fullscreen;
     init();
   }
 
@@ -112,7 +112,7 @@ public class Viewer {
 
   public void setWidth(int width)
   {
-    Viewer.width = width;
+    GameScreen.width = width;
   }
 
   public int getHeight()
@@ -122,7 +122,7 @@ public class Viewer {
 
   public void setHeight(int height)
   {
-    Viewer.height = height;
+    GameScreen.height = height;
   }
 
   public String getName()
@@ -132,7 +132,7 @@ public class Viewer {
 
   public void setName(String name)
   {
-    Viewer.name = name;
+    GameScreen.name = name;
   }
   
 }

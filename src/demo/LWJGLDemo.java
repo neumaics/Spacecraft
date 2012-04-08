@@ -15,7 +15,7 @@ import org.lwjgl.util.vector.Vector3f;
 import game.*;
 
 public class LWJGLDemo {
-  private static Viewer viewer;
+  private static GameScreen viewer;
   
   // Assorted constants
   public static final int WINDOW_WIDTH = 800;
@@ -123,12 +123,12 @@ public class LWJGLDemo {
   }
   
   public static void start(){
-    while (!Viewer.isCloseRequested()) {
+    while (!GameScreen.isCloseRequested()) {
       render();
-      Viewer.update();
+      GameScreen.update();
     }
     
-    Viewer.cleanUp();
+    GameScreen.cleanUp();
   }
   
   private static void render() {
