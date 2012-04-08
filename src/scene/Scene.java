@@ -2,7 +2,6 @@ package scene;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * This class should be the collection of the objects visible in the world at any given time. It 

@@ -1,25 +1,26 @@
 package game;
 
-import scene.*;
 public class ClientController {
 
-  private static Scene scene;
+  private static Viewer viewer;
   
   public ClientController() {
     initialize(); 
   }
   
-  private void initialize() {
-    GameScreen viewer = new GameScreen.Builder("Spacecraft").build();
-    scene = new Scene();
-    scene.attach(new Cube());
-    viewer.getHeight();
+  private static void initialize() {
+    GameScreen disp = new GameScreen.Builder("Spacecraft").build();
+    disp.getHeight();
+    viewer = new Viewer();
+    
+    
+   
   }
   
   public void start() {
     while (!GameScreen.isCloseRequested()) {
       GameScreen.update();
-      scene.draw();
+      viewer.drawScene();
     }
     
     GameScreen.cleanUp();
