@@ -27,8 +27,15 @@ public class Scene {
   {
     scene_objects = new ArrayList<Node>();
   }
+  
   public void attach( Node node )
   {
     scene_objects.add( node );
+  }
+  
+  public void draw(){
+    for (Node n : scene_objects) {
+      n.draw();
+    }
   }
 }
