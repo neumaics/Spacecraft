@@ -1,5 +1,6 @@
 package demo;
 
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 
@@ -7,17 +8,15 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import viewer.Viewer;
-
+import game.*;
 
 public class LWJGLDemo {
+  private static GameScreen viewer;
+  
   // Assorted constants
   public static final int WINDOW_WIDTH = 800;
   public static final int WINDOW_HEIGHT = 600;
@@ -57,18 +56,18 @@ public class LWJGLDemo {
   private static ByteBuffer temp = ByteBuffer.allocateDirect(FLOAT_BYTES);
   private static float fov = 20;
   public static Cube cube;  
-  
-  public static void main(String[] args) {
-    Viewer viewer = new Viewer.Builder( WINDOW_NAME ).width( WINDOW_WIDTH ).height( WINDOW_HEIGHT ).build();
-    initVariables();
-    initProjection();
-    initLightsource();
- 
-    
-    cube = new Cube();
-    
-    start();
-  }
+
+//  public static void main(String[] args) {
+//    viewer = new Viewer.Builder( WINDOW_NAME ).width( WINDOW_WIDTH ).height( WINDOW_HEIGHT ).build();
+//    initVariables();
+//    initProjection();
+//    initLightsource();
+// 
+//    
+//    cube = new Cube();
+//    
+//    start();
+//  }
   
   public static void initVariables() {
     HasWheel = Mouse.hasWheel();
@@ -124,12 +123,12 @@ public class LWJGLDemo {
   }
   
   public static void start(){
-    while (!Display.isCloseRequested()) {
+    while (!GameScreen.isCloseRequested()) {
       render();
-      Display.update();
+      GameScreen.update();
     }
     
-    Display.destroy();
+    GameScreen.cleanUp();
   }
   
   private static void render() {
@@ -282,4 +281,5 @@ public class LWJGLDemo {
     R0.setIdentity();
     Matrix4f.mul(MvM, R0, R0);
   }
+  
 }
