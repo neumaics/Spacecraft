@@ -9,6 +9,7 @@ public class GameScreen {
   private static int height;
   private static boolean fullscreen;
   private static String name;
+  private static int vsync;
   
   public static class Builder {
     //Required parameters
@@ -18,6 +19,7 @@ public class GameScreen {
     private int width = 800;
     private int height = 600;
     private boolean fullscreen = false;
+    private int vsync = 60;
     
     public Builder( String name ) 
     { 
@@ -35,6 +37,10 @@ public class GameScreen {
     {
       this.fullscreen = fullscreen; return this;
     }
+    public Builder vsynch( int vsync )
+    {
+      this.vsync = vsync; return this;
+    }
     public GameScreen build()
     {
       return new GameScreen( this );
@@ -46,6 +52,7 @@ public class GameScreen {
     GameScreen.height = builder.height;
     GameScreen.width = builder.width;
     GameScreen.fullscreen = builder.fullscreen;
+    GameScreen.vsync = builder.vsync;
     init();
   }
 
@@ -90,9 +97,13 @@ public class GameScreen {
     init();
   }
   
+  /**
+   * Updates the display and synchronizes to the given frame rate.
+   */
   public static void update()
   {
     Display.update();
+    Display.sync(vsync);
   }
   
   public static boolean isCloseRequested()
