@@ -4,12 +4,18 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+/**
+ * Functions as a wrapper for LWJGL's Display class.
+ * 
+ * @author Mitch
+ * @author Brian Holland (bholland@mymail.mines.edu)
+ */
 public class GameScreen {
-  private static int width;
-  private static int height;
-  private static boolean fullscreen;
-  private static String name;
-  private static int vsync;
+  private int width;
+  private int height;
+  private boolean fullscreen;
+  private String name;
+  private int vsync;
   
   public static class Builder {
     //Required parameters
@@ -48,15 +54,15 @@ public class GameScreen {
   }
   
   private GameScreen( Builder builder ) {
-    GameScreen.name = builder.name;
-    GameScreen.height = builder.height;
-    GameScreen.width = builder.width;
-    GameScreen.fullscreen = builder.fullscreen;
-    GameScreen.vsync = builder.vsync;
+    this.name = builder.name;
+    this.height = builder.height;
+    this.width = builder.width;
+    this.fullscreen = builder.fullscreen;
+    this.vsync = builder.vsync;
     init();
   }
 
-  private static void init()
+  private void init()
   {
     try 
     {
@@ -72,7 +78,7 @@ public class GameScreen {
     }
   }
   
-  public static void toggleFullscreen()
+  public void toggleFullscreen()
   {
     fullscreen = !fullscreen;
     try
@@ -91,7 +97,7 @@ public class GameScreen {
    * Assuming that the width or height has changed, this will destroy the 
    * current display, then make a new one based off of the new values.
    */
-  public static void changeScreenDimensions()
+  public void changeScreenDimensions()
   {
     Display.destroy();
     init();
@@ -100,7 +106,7 @@ public class GameScreen {
   /**
    * Updates the display and synchronizes to the given frame rate.
    */
-  public static void update()
+  public void update()
   {
     Display.update();
     Display.sync(vsync);
@@ -111,7 +117,7 @@ public class GameScreen {
     return Display.isCloseRequested();
   }
   
-  public static void cleanUp()
+  public void cleanUp()
   {
     Display.destroy();
   }
@@ -123,7 +129,7 @@ public class GameScreen {
 
   public void setWidth(int width)
   {
-    GameScreen.width = width;
+    this.width = width;
   }
 
   public int getHeight()
@@ -133,7 +139,7 @@ public class GameScreen {
 
   public void setHeight(int height)
   {
-    GameScreen.height = height;
+    this.height = height;
   }
 
   public String getName()
@@ -143,7 +149,7 @@ public class GameScreen {
 
   public void setName(String name)
   {
-    GameScreen.name = name;
+    this.name = name;
   }
   
 }

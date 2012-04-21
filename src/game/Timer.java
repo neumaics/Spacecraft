@@ -13,9 +13,9 @@ import org.lwjgl.Sys;
  */
 public class Timer {
   private static final int MILS_TO_SECS = 1000;  
-  private static int fps;
-  private static long lastFPS;
-  private static long lastFrame;
+  private int fps;
+  private long lastFPS;
+  private long lastFrame;
   
   public Timer() {
     lastFPS = getTime();
@@ -32,7 +32,6 @@ public class Timer {
 
   public void updateFPS() {
     if (getTime() - lastFPS > MILS_TO_SECS) {
-      System.out.println(fps);
       fps = 0;
       lastFPS += 1000;
     }

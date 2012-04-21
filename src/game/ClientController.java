@@ -1,16 +1,16 @@
 package game;
 
 public class ClientController {
-  private static Timer timer;
-  private static Viewer viewer;
+  private Timer timer;
+  private Viewer viewer;
+  private GameScreen display;
   
   public ClientController() {
     initialize(); 
   }
   
-  private static void initialize() {
-    GameScreen disp = new GameScreen.Builder("Spacecraft").build();
-    disp.getHeight();
+  private void initialize() {
+    display = new GameScreen.Builder("Spacecraft").build();
     
     timer = new Timer();
     viewer = new Viewer();
@@ -19,11 +19,11 @@ public class ClientController {
   
   public void start() {
     while (!GameScreen.isCloseRequested()) {
-      GameScreen.update();
+      display.update();
       viewer.drawScene();
       timer.updateFPS();
     }
     
-    GameScreen.cleanUp();
+    display.cleanUp();
   }
 }

@@ -15,8 +15,6 @@ import org.lwjgl.util.vector.Vector3f;
 import game.*;
 
 public class LWJGLDemo {
-  private static GameScreen viewer;
-  
   // Assorted constants
   public static final int WINDOW_WIDTH = 800;
   public static final int WINDOW_HEIGHT = 600;
@@ -123,12 +121,13 @@ public class LWJGLDemo {
   }
   
   public static void start(){
+    GameScreen display = new GameScreen.Builder("Spacecraft").build();
     while (!GameScreen.isCloseRequested()) {
       render();
-      GameScreen.update();
+      display.update();
     }
     
-    GameScreen.cleanUp();
+    display.cleanUp();
   }
   
   private static void render() {
