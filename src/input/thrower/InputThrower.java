@@ -14,10 +14,23 @@ public abstract class InputThrower implements Runnable {
 
 	private LivingEntity target = null;
 	private LivingEntityInputListener observer = null;
-	
+	private Thread thread = null;
 	public InputThrower(LivingEntity target,LivingEntityInputListener observer) {
 		this.target = target;
 		this.observer = observer;
+	}
+	
+	public void start() {
+		if(thread==null||!thread.isAlive()) {
+			thread = new Thread(this);
+			thread.start();
+		}
+	}
+	
+	public void stop() {
+		if(thread!=null) {
+			thread.interrupt();
+		}
 	}
 	
 	@Override
@@ -31,7 +44,7 @@ public abstract class InputThrower implements Runnable {
 		observer.livingEntityMoved(new MovementEvent(direction,target));
 	}
 	
-	protected final void throwActionEvent(Action action) {
+	protected final void throwAction(Action action) {
 		observer.livingEntityActed(new ActionEvent(action,target));
 	}
 }

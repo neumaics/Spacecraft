@@ -19,6 +19,7 @@ public class UserInputThrower extends InputThrower {
 	private int userX;
 	private int userY;
 	private Vector3f rotation = new Vector3f(0f,0f,0f);
+	
 	@Override
 	public void run() {
 
@@ -36,6 +37,10 @@ public class UserInputThrower extends InputThrower {
 			throwRotatation(rotation);
 		}
 		
+		//Click
+		if(Mouse.isButtonDown(0)) {
+//			throwAction()
+		}
 		
 	}
 

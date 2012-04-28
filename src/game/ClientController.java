@@ -6,24 +6,24 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import entities.Player;
+//import entities.Player;
 
-import scene.ArrayModelImpl;
-import scene.Model;
+//import scene.ArrayModelImpl;
+//import scene.Model;
 
 public class ClientController {
   private Timer timer;
   private Viewer viewer;
   private GameScreen display;
-  private Player player;
-  private Model model;
+//  private Player player;
+//  private Model model;
   public ClientController() {
 	   display = new GameScreen.Builder("Spacecraft").build();
 	    
 	   timer = new Timer();
 	   viewer = new Viewer();
-	   player = new Player();
-	   model = new ArrayModelImpl();
+//	   player = new Player();
+//	   model = new ArrayModelImpl();
 	  }
   
   public void start() {
