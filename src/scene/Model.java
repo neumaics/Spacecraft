@@ -1,5 +1,7 @@
 package scene;
 
+import util.Vector3i;
+
 /**
  * This abstract class is an expression of the world, a subsection of which will 
  * be drawn as the scene.
@@ -9,5 +11,6 @@ package scene;
  */
 
 public abstract class Model {
-  
+
+  public abstract Cube getCube(Vector3i p);
 }

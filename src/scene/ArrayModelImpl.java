@@ -1,5 +1,9 @@
 package scene;
 
+import scene.Cube.DIRECTION;
+import scene.Cube.ORDER;
+import scene.Cube.ORIENTATION;
+
 import util.Vector3i;
 
 /**
@@ -24,11 +28,12 @@ public class ArrayModelImpl extends Model {
     this.height = height;
     
     world = new Cube[this.width][][];
-    
     for (int i = 0; i < this.width; ++i) {
+      world[i] = new Cube[this.length][];
       for (int j = 0; j < this.length; ++j) {
+        world[i][j] = new Cube[this.height];
         for (int k = 0; k < this.height; ++k) {
-          
+          world[i][j][k] = new Cube(ORDER.Z, DIRECTION.EAST, ORIENTATION.UP);
         }
       }
     }
