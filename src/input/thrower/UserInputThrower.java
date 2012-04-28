@@ -33,32 +33,14 @@ public class UserInputThrower extends InputThrower {
 	@Override
 	public void run() {
 		while(!done) {
-			//Rotation
-			middleX = Display.getWidth()/2;
-			middleY = Display.getHeight()/2;
-	
-			Mouse.poll();
-	
-			userX = Mouse.getX();
-			userY = Mouse.getY();
-			if(userX!=middleX || userY!=middleY) {
-				rotation.setX((float)(userX-middleX));
-				rotation.setY((float)(userY-middleY));
-				throwRotatation(rotation);
-				Mouse.setCursorPosition(middleX,middleY);
-			}
-			
-			//Click
-			if(Mouse.isButtonDown(0)) {
-				throwAction(Action.ACTIVATE);
-			}
-			
-			if(Mouse.isButtonDown(1)) {
-				throwAction(Action.SELECT);
-			}
 			
 			//Keyboard
 			Keyboard.poll();
+
+			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				done = true;
+				break;
+			}
 			
 			if(Keyboard.isKeyDown(Keyboard.KEY_A)) {
 				moving = true;
@@ -81,6 +63,30 @@ public class UserInputThrower extends InputThrower {
 				throwMovement(movement);
 				movement.set(0f,0f,0f);
 				moving = false;
+			}
+			
+			//Rotation
+			middleX = Display.getWidth()/2;
+			middleY = Display.getHeight()/2;
+	
+			Mouse.poll();
+	
+			userX = Mouse.getX();
+			userY = Mouse.getY();
+			if(userX!=middleX || userY!=middleY) {
+				rotation.setX((float)(userX-middleX));
+				rotation.setY((float)(userY-middleY));
+				throwRotatation(rotation);
+				Mouse.setCursorPosition(middleX,middleY);
+			}
+			
+			//Click
+			if(Mouse.isButtonDown(0)) {
+				throwAction(Action.ACTIVATE);
+			}
+			
+			if(Mouse.isButtonDown(1)) {
+				throwAction(Action.SELECT);
 			}
 		}
 	}
