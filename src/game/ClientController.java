@@ -13,7 +13,7 @@ import java.awt.event.MouseMotionListener;
 
 public class ClientController {
   private Timer timer;
-  private Viewer viewer;
+  private Renderer viewer;
   private GameScreen display;
 //  private Player player;
 //  private Model model;
@@ -21,7 +21,7 @@ public class ClientController {
 	   display = new GameScreen.Builder("Spacecraft").build();
 	    
 	   timer = new Timer();
-	   viewer = new Viewer();
+	   viewer = new Renderer();
 //	   player = new Player();
 //	   model = new ArrayModelImpl();
 	  }

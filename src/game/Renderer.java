@@ -1,10 +1,10 @@
 package game;
 
 import scene.*;
-public class Viewer {
+public class Renderer {
   private Scene scene;
   
-  public Viewer(){
+  public Renderer(){
     initialize();
   }
   
