@@ -11,6 +11,15 @@ import util.Vector3i;
  */
 
 public abstract class Model {
+  public final int length;
+  public final int width;
+  public final int height;
+  
+  public Model(int l, int w, int h) {
+    this.length = l;
+    this.width = w;
+    this.height = h;
+  }
 
   public abstract Cube getCube(Vector3i p);
 }

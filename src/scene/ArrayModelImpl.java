@@ -14,26 +14,29 @@ import util.Vector3i;
  */
 public class ArrayModelImpl extends Model {
   private Cube[][][] world;
-  private final int length;
-  private final int width;
-  private final int height;
   
   public ArrayModelImpl() {
-   this.length = this.width = this.height = 20; 
+   super(20, 20, 20);
+//   this.length = this.width = this.height = 20; 
+   
   }
   
   public ArrayModelImpl(int length, int width, int height) {
-    this.length = length;
-    this.width = width;
-    this.height = height;
+    super(length, width, height);
+//    this.length = length;
+//    this.width = width;
+//    this.height = height;
     
-    world = new Cube[this.width][][];
-    for (int i = 0; i < this.width; ++i) {
-      world[i] = new Cube[this.length][];
-      for (int j = 0; j < this.length; ++j) {
-        world[i][j] = new Cube[this.height];
-        for (int k = 0; k < this.height; ++k) {
-          world[i][j][k] = new Cube(ORDER.Z, DIRECTION.EAST, ORIENTATION.UP);
+    world = new Cube[this.length][][];
+    for (int i = 0; i < this.length; ++i) {
+      world[i] = new Cube[this.height][];
+      for (int j = 0; j < this.height; ++j) {
+        world[i][j] = new Cube[this.width];
+        for (int k = 0; k < this.width; ++k) {
+          if (j > height/2)
+            world[i][j][k] = new Cube(ORDER.Z, DIRECTION.EAST, ORIENTATION.UP);
+          else
+            world[i][j][k] = new Cube(ORDER.A, DIRECTION.EAST, ORIENTATION.UP);
         }
       }
     }

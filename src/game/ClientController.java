@@ -9,27 +9,27 @@ import input.thrower.UserInputThrower;
 
 import entities.Player;
 
-//import scene.ArrayModelImpl;
-//import scene.Model;
+import scene.ArrayModelImpl;
+import scene.Model;
 
 public class ClientController {
   private Timer timer;
-  private Renderer viewer;
+  private Renderer renderer;
   private GameScreen display;
   private InputThrower thrower;
   
   private Player player;
-//  private Model model;
+  private Model model;
   public ClientController() {
 	   display = new GameScreen.Builder("Spacecraft").build();
 	    
 	   timer = new Timer();
-	   viewer = new Renderer();
+	   renderer = new Renderer();
 	   LivingEntityInputListener listener = new UserInputListener();
 	   player = new Player();
 
 	   thrower = new UserInputThrower(player,listener);
-//	   model = new ArrayModelImpl();
+	   model = new ArrayModelImpl(20, 20, 20);
 	  }
   
   public void start() {
@@ -37,7 +37,7 @@ public class ClientController {
 
 	  while (!GameScreen.isCloseRequested()) {
       display.update();
-      viewer.drawScene();
+      renderer.render(model, player);
       timer.updateFPS();
     }
     

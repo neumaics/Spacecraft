@@ -1,5 +1,11 @@
 package game;
 
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glViewport;
+import static org.lwjgl.util.glu.GLU.gluPerspective;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -64,18 +70,24 @@ public class GameScreen {
 
   private void init()
   {
-    try 
-    {
+    try {
       Display.setTitle(name);
       Display.setDisplayMode(new DisplayMode(width, height));
       Display.setFullscreen(fullscreen);
       Display.create();
-    } 
-    catch (LWJGLException e) 
-    {
+      initOpenGL();
+    } catch (LWJGLException e) {
       e.printStackTrace();
       System.exit(0);
     }
+  }
+  
+  public void initOpenGL() {
+    glViewport(0, 0, height, width);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    gluPerspective(90f, 1, 0, 2);
   }
   
   public void toggleFullscreen()
