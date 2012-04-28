@@ -1,5 +1,9 @@
-package input;
+package input.thrower;
 
+import input.ActionEvent;
+import input.LivingEntityInputListener;
+import input.MovementEvent;
+import input.RotationEvent;
 import input.ActionEvent.Action;
 
 import org.lwjgl.util.vector.Vector3f;
