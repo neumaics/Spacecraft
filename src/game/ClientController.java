@@ -1,12 +1,13 @@
 package game;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import input.ActionEvent;
+import input.LivingEntityInputListener;
+import input.MovementEvent;
+import input.RotationEvent;
+import input.thrower.InputThrower;
+import input.thrower.UserInputThrower;
 
-//import entities.Player;
+import entities.Player;
 
 //import scene.ArrayModelImpl;
 //import scene.Model;
@@ -15,93 +16,50 @@ public class ClientController {
   private Timer timer;
   private Renderer viewer;
   private GameScreen display;
-//  private Player player;
+  private InputThrower thrower;
+  
+  private Player player;
 //  private Model model;
   public ClientController() {
 	   display = new GameScreen.Builder("Spacecraft").build();
 	    
 	   timer = new Timer();
 	   viewer = new Renderer();
-//	   player = new Player();
+	   LivingEntityInputListener listener = new UserInputListener();
+	   player = new Player();
+
+	   thrower = new UserInputThrower(player,listener);
 //	   model = new ArrayModelImpl();
 	  }
   
   public void start() {
-    while (!GameScreen.isCloseRequested()) {
+	  thrower.start();
+
+	  while (!GameScreen.isCloseRequested()) {
       display.update();
       viewer.drawScene();
       timer.updateFPS();
     }
     
+	thrower.stop();
     display.cleanUp();
   }
   
-  public class MovementListener implements KeyListener {
+  public class UserInputListener implements LivingEntityInputListener {
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void livingEntityActed(ActionEvent actionEvent) {
+		System.out.println("Entity Acted!");
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void livingEntityMoved(MovementEvent movementEvent) {
+		System.out.println("Entity Moved!");
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-  }
-  
-  public class ActionListener implements MouseListener {
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	  
-  }
-  
-  public class RotationListener implements MouseMotionListener {
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		
+	public void livingEntityRotated(RotationEvent rotationEvent) {
+		System.out.println("Entity Rotated!");
 	}
 	  
   }

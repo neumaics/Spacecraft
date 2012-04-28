@@ -1,4 +1,4 @@
-package game;
+	package game;
 
 public class GameController {
 	private static ClientController client;
