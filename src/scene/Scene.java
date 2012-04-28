@@ -22,17 +22,15 @@ import java.util.Collection;
  */
 public class Scene {
   private Collection<Node> scene_objects;
-  public Scene()
-  {
+  public Scene() {
     scene_objects = new ArrayList<Node>();
   }
   
-  public void attach( Node node )
-  {
+  public void attach( Node node ) {
     scene_objects.add( node );
   }
   
-  public void draw(){
+  public void draw() {
     for (Node n : scene_objects) {
       n.draw();
     }

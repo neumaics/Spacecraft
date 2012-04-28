@@ -8,6 +8,6 @@ package scene;
  *
  */
 
-abstract class Model {
+public abstract class Model {
   
 }

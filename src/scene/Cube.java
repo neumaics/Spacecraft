@@ -25,8 +25,7 @@ public class Cube implements Node {
   }
   
   @Override
-  public void draw()
-  {
+  public void draw() {
     glBegin(GL_QUADS);
     // Face 1:
     glNormal3f(0, 0, 1f);
