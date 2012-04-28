@@ -90,7 +90,6 @@ public class GameScreen {
       e.printStackTrace();
       System.exit(0);
     }
-    
   }
   
   /**

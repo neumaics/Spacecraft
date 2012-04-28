@@ -10,7 +10,7 @@ public class Viewer {
   
   private void initialize() {
     scene = new Scene();
-    scene.attach(new Cube());
+    scene.attach(new LegacyCube());
   }
   
   public void drawScene() {
