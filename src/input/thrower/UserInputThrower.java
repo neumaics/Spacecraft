@@ -74,9 +74,7 @@ public class UserInputThrower extends InputThrower {
 			userX = Mouse.getX();
 			userY = Mouse.getY();
 			if(userX!=middleX || userY!=middleY) {
-				rotation.setX((float)(userX-middleX));
-				rotation.setY((float)(userY-middleY));
-				throwRotatation(rotation);
+				throwRotatation(userY-middleY,userX-middleX);
 				Mouse.setCursorPosition(middleX,middleY);
 			}
 			

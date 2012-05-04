@@ -36,8 +36,8 @@ public abstract class InputThrower implements Runnable {
 	@Override
 	public abstract void run();
 
-	protected final void throwRotatation(Vector3f rotation) {
-		observer.livingEntityRotated(new RotationEvent(rotation,target));
+	protected final void throwRotatation(float pitch, float direction) {
+		observer.livingEntityRotated(new RotationEvent(pitch,direction,target));
 	}
 	
 	protected final void throwMovement(Vector3f direction) {

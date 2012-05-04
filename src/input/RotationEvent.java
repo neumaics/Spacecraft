@@ -6,19 +6,24 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class RotationEvent {
 
-	private Vector3f rotation;
 	private LivingEntity target;
+	private float pitch;
+	private float direction;
 	
-	public Vector3f getRotation() {
-		return rotation;
-	}
 	public LivingEntity getTarget() {
 		return target;
 	}
-	public RotationEvent(Vector3f rotation, LivingEntity target) {
+	public RotationEvent(float pitch,float direction, LivingEntity target) {
 		super();
-		this.rotation = rotation;
 		this.target = target;
+		this.pitch = pitch;
+		this.direction = direction;
 	}
-	
+	public float getPitch() {
+		return pitch;
+	}
+	public float getDirection() {
+		return direction;
+	}
+
 }

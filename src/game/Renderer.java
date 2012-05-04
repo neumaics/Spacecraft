@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Random;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -40,10 +42,22 @@ public class Renderer {
   }
   
   public void render(Model m, Player p){
-    Vector3i position;
-    
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	Vector3i position;
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    
+    Vector3f playerPosition = p.getPosition();
+    
+    //2 rotations
+    // x axis
+    glRotatef(-p.getPitch(),1f,0f,0f);
+    // y axis
+    glRotatef(p.getDirection(),0f,1f,0f);
+    
+  
+    glScalef(2f/m.length, 2f/m.height, 2f/m.width);
+    glTranslatef(-playerPosition.x, -playerPosition.y-.5f, -playerPosition.z);
     
     for (int i = 0; i < m.length; i++) {
       for (int j = 0; j < m.height; j++) {
@@ -54,18 +68,14 @@ public class Renderer {
       }
     }
     
-    Vector3f playerPosition = p.getPosition();
     
 //    GL11.glTranslatef(-1, -1, -1);
-    glScalef(2f/m.length, 2f/m.height, 2f/m.width);
-    glTranslatef(-playerPosition.x, -playerPosition.y, -playerPosition.z);
   }
   
   public void drawCube(Cube cube, Vector3i position) {
     glPushMatrix();
-    glLoadIdentity();
-
-    glTranslatef(-position.x, -position.y, -position.z);
+    glTranslatef(position.x, position.y, position.z);
+//    glScalef(.1f,.1f,.1f);
     glBegin(GL_QUADS);
       
     
@@ -124,11 +134,9 @@ public class Renderer {
       //do nothing. It's a void cube.
       break;
     }
-    
-    
-//    glPopMatrix();
+
     glEnd();
-    glTranslatef(position.x, position.y, position.z);
+    glPopMatrix();
   }
   
 //  public void rotateCube(Cube)

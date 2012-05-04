@@ -29,7 +29,7 @@ public class GameScreen {
     
     //Optional parameters
     private int width = 800;
-    private int height = 600;
+    private int height = 800;
     private boolean fullscreen = false;
     private int vsync = 60;
     
@@ -87,7 +87,7 @@ public class GameScreen {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    gluPerspective(90f, 1, 0, 2);
+    gluPerspective(45f, (float)width/(float)height, 0.01f, 2000);
   }
   
   public void toggleFullscreen()

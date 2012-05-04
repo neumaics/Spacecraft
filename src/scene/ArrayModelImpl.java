@@ -33,7 +33,7 @@ public class ArrayModelImpl extends Model {
       for (int j = 0; j < this.height; ++j) {
         world[i][j] = new Cube[this.width];
         for (int k = 0; k < this.width; ++k) {
-          if (j > height/2)
+          if (j >= height/2)
             world[i][j][k] = new Cube(ORDER.Z, DIRECTION.EAST, ORIENTATION.UP);
           else
             world[i][j][k] = new Cube(ORDER.A, DIRECTION.EAST, ORIENTATION.UP);

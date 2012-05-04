@@ -37,6 +37,7 @@ public class ClientController {
 
 	  while (!GameScreen.isCloseRequested()) {
       display.update();
+      
       renderer.render(model, player);
       timer.updateFPS();
     }
@@ -59,7 +60,11 @@ public class ClientController {
 
 	@Override
 	public void livingEntityRotated(RotationEvent rotationEvent) {
-		System.out.println("Entity Rotated!");
+		float newDirection = rotationEvent.getTarget().getDirection()+rotationEvent.getDirection();
+		rotationEvent.getTarget().setDirection(newDirection);
+		
+		float newPitch = rotationEvent.getTarget().getPitch()+rotationEvent.getPitch();
+		rotationEvent.getTarget().setPitch(newPitch);
 	}
 	  
   }

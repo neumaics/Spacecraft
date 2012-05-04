@@ -9,7 +9,6 @@ public class Player extends LivingEntity {
 		super();
 	}
 
-	public Player(Vector3f position, Vector3f direction) {
-		super(position,direction);
+	public Player(Vector3f position) {
 	}
 }
