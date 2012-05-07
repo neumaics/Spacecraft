@@ -36,8 +36,10 @@ public class ClientController {
 
 	   thrower = new UserInputThrower(player,listener);
 	//   model = new ArrayModelImpl(20,20,20);
-	   model = new SimpleSceneImpl(); 
+	   model = new SimpleSceneImpl();
 	   engine = new GameEngine();
+	   
+	   renderer.setLight(model);
 	  }
   
   public void start() {

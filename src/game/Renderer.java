@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Player;
@@ -15,10 +16,15 @@ public class Renderer {
   private Scene scene;
   private Vector3f V[];
   private static float D = 1f;
+  private Matrix4f modelviewmatrix;
+  private FloatBuffer MvMBuffer = ByteBuffer.allocateDirect(64).order(ByteOrder.nativeOrder()).asFloatBuffer();
+  private Matrix4f inversemodelviewmatrix;
+  
   
   /* Lighting variables and buffer */
+  private Light light;
   private ByteBuffer temporary = ByteBuffer.allocateDirect(16);
-   
+  private float[] lightposition; 
   
   public Renderer(){
     initialize();
@@ -28,6 +34,8 @@ public class Renderer {
     scene = new Scene();
     scene.attach(new LegacyCube());
     
+    inversemodelviewmatrix = new Matrix4f();
+    modelviewmatrix = new Matrix4f();
     V = new Vector3f[8];
     V[0] = new Vector3f(0, 0, 0);
     V[1] = new Vector3f(0, D, 0);
@@ -39,23 +47,30 @@ public class Renderer {
     V[7] = new Vector3f(D, 0, D);
     
     glEnable(GL_DEPTH_TEST);
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
   }
   
   public void drawScene() {
 //    scene.draw();
   }
   
-  public void render(Model m, Player p){
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	Vector3i position;
-	
+  public void setLight(Model m) {
+    light = m.getLightSource();
+  }
+  
+  public void render(Model m, Player p) {
+    setModelViewMatrix();
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    Vector3i position;
+    drawLight(m.getLightSource());
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    
+
     Vector3f playerPosition = p.getPosition();
-    
-    //2 rotations
+
+    // 2 rotations
     // x axis
     glRotatef(-p.getPitch(),1f,0f,0f);
     // y axis
@@ -92,7 +107,7 @@ public class Renderer {
       glBegin(GL_QUADS);
 
       // West Face
-      glNormal3f(0, 0, -1f);
+      glNormal3f(0, 0, 1f);
       glVertex3f(V[0].x, V[0].y, V[0].z);
       glVertex3f(V[1].x, V[1].y, V[1].z);
       glVertex3f(V[2].x, V[2].y, V[2].z);
@@ -350,21 +365,39 @@ public class Renderer {
   }
   
   public void drawLight(Light light) {
-
     light.draw();
-	  
-	  temporary.order(ByteOrder.nativeOrder());
-	  glLight(GL_LIGHT0, GL_AMBIENT, (FloatBuffer)temporary.asFloatBuffer().put(light.light_ambient).flip());
-	  glLight(GL_LIGHT0, GL_DIFFUSE, (FloatBuffer)temporary.asFloatBuffer().put(light.light_diffuse).flip());
-	  glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)temporary.asFloatBuffer().put(light.getPosition()).flip());
-	  
-	  glEnable(GL_LIGHT0);
-    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0f);
-    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0f);
-    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0f);
     
-    glEnable(GL_LIGHTING);
-	  	  
+    glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)temporary.asFloatBuffer().put(light.getPosition()).flip());
+  }
+  
+  public void setModelViewMatrix() {
+    glGetFloat(GL_MODELVIEW_MATRIX, MvMBuffer);
+    
+    inversemodelviewmatrix.m00 = modelviewmatrix.m00 = MvMBuffer.get(0);
+    inversemodelviewmatrix.m01 = modelviewmatrix.m01 = MvMBuffer.get(1);
+    inversemodelviewmatrix.m02 = modelviewmatrix.m02 = MvMBuffer.get(2);
+    inversemodelviewmatrix.m03 = modelviewmatrix.m03 = MvMBuffer.get(3);
+    
+    inversemodelviewmatrix.m10 = modelviewmatrix.m10 = MvMBuffer.get(4);
+    inversemodelviewmatrix.m11 = modelviewmatrix.m11 = MvMBuffer.get(5);
+    inversemodelviewmatrix.m12 = modelviewmatrix.m12 = MvMBuffer.get(6);
+    inversemodelviewmatrix.m13 = modelviewmatrix.m13 = MvMBuffer.get(7);
+    
+    inversemodelviewmatrix.m20 = modelviewmatrix.m20 = MvMBuffer.get(8);
+    inversemodelviewmatrix.m21 = modelviewmatrix.m21 = MvMBuffer.get(9);
+    inversemodelviewmatrix.m22 = modelviewmatrix.m22 = MvMBuffer.get(10);
+    inversemodelviewmatrix.m23 = modelviewmatrix.m23 = MvMBuffer.get(11);
+    
+    inversemodelviewmatrix.m30 = modelviewmatrix.m30 = MvMBuffer.get(12);
+    inversemodelviewmatrix.m31 = modelviewmatrix.m31 = MvMBuffer.get(13);
+    inversemodelviewmatrix.m32 = modelviewmatrix.m32 = MvMBuffer.get(14);
+    inversemodelviewmatrix.m33 = modelviewmatrix.m33 = MvMBuffer.get(15);
+    
+    inversemodelviewmatrix.invert();
+  }
+  
+  public void transformLightPosition() {
+    
   }
 //  public void rotateCube(Cube)
 }
