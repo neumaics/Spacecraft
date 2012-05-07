@@ -48,6 +48,9 @@ public class Renderer {
     
     glEnable(GL_DEPTH_TEST);
     glShadeModel(GL_SMOOTH);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
   }
   
   public void drawScene() {
@@ -99,15 +102,25 @@ public class Renderer {
   public void drawCube(Cube cube, Vector3i position) {
     glPushMatrix();
     glTranslatef(position.x, position.y, position.z);
-    glScalef(1f,1f,1f);
+  //  glScalef(.1f,.1f,.1f);
     glColor3f(0,1f,0);
     switch(cube.o) {
     case A:
       
       glBegin(GL_QUADS);
 
+      /*
+        V[0] = new Vector3f(0, 0, 0);
+    	V[1] = new Vector3f(0, D, 0);
+    	V[2] = new Vector3f(D, D, 0);
+    	V[3] = new Vector3f(D, 0, 0);
+    	V[4] = new Vector3f(0, 0, D);
+    	V[5] = new Vector3f(0, D, D);
+    	V[6] = new Vector3f(D, D, D);
+    	V[7] = new Vector3f(D, 0, D);
+       */
       // West Face
-      glNormal3f(0, 0, 1f);
+      glNormal3f(0, 0, -1f);
       glVertex3f(V[0].x, V[0].y, V[0].z);
       glVertex3f(V[1].x, V[1].y, V[1].z);
       glVertex3f(V[2].x, V[2].y, V[2].z);
@@ -365,9 +378,9 @@ public class Renderer {
   }
   
   public void drawLight(Light light) {
-    light.draw();
+ //   light.draw();
     
-    glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)temporary.asFloatBuffer().put(light.getPosition()).flip());
+ //   glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)temporary.asFloatBuffer().put(light.getPosition()).flip());
   }
   
   public void setModelViewMatrix() {

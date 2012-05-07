@@ -19,7 +19,7 @@ public class SimpleSceneImpl extends Model {
 	      for (int j = 0; j < this.height; ++j) {
 	        world[i][j] = new Cube[this.width];
 	        for (int k = 0; k < this.width; ++k) {
-	          if (j >= height/2 || j < height/2 - 1 )
+	          if (j >= height/2)
 	            world[i][j][k] = new Cube(ORDER.Z, DIRECTION.EAST, ORIENTATION.UP);
 	          else 
 	            world[i][j][k] = new Cube(ORDER.A, DIRECTION.SOUTH_WEST, ORIENTATION.UP);
