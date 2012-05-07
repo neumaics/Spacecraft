@@ -69,7 +69,7 @@ public class Renderer {
   public void drawCube(Cube cube, Vector3i position) {
     glPushMatrix();
     glTranslatef(position.x, position.y, position.z);
-    glScalef(1f,1f,1f);
+    glScalef(.1f,.1f,.1f);
     glColor3f(0,1f,0);
     switch(cube.o) {
     case A:
