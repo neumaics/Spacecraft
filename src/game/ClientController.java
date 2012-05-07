@@ -13,6 +13,7 @@ import input.thrower.UserInputThrower;
 import entities.Player;
 
 import scene.ArrayModelImpl;
+import scene.ArrayModelManualImpl;
 import scene.Model;
 import scene.SimpleSceneImpl;
 
