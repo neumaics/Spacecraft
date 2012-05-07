@@ -92,7 +92,14 @@ public class UserInputThrower extends InputThrower {
 					moving = true;
 					movement.setZ(movement.getZ()-0.1f);
 				}
-				
+				if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+					moving = true;
+					movement.setY(movement.getY()+.1f);
+				}
+				if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+					moving = true;
+					movement.setY(movement.getY()-.1f);
+				}
 				if(moving) {
 					
 					float x = -movement.getX();
