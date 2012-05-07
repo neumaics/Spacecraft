@@ -15,6 +15,7 @@ import entities.Player;
 import scene.ArrayModelImpl;
 import scene.ArrayModelManualImpl;
 import scene.Model;
+import scene.SimpleSceneImpl;
 
 public class ClientController {
   private Timer timer;
@@ -34,8 +35,8 @@ public class ClientController {
 	   player = new Player();
 
 	   thrower = new UserInputThrower(player,listener);
-	   model = new ArrayModelManualImpl(20,20,20);
-	   
+	//   model = new ArrayModelImpl(20,20,20);
+	   model = new SimpleSceneImpl(); 
 	   engine = new GameEngine();
 	  }
   

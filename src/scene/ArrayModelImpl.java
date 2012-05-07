@@ -23,9 +23,6 @@ public class ArrayModelImpl extends Model {
   
   public ArrayModelImpl(int length, int width, int height) {
     super(length, width, height);
-//    this.length = length;
-//    this.width = width;
-//    this.height = height;
     
     world = new Cube[this.length][][];
     for (int i = 0; i < this.length; ++i) {
@@ -35,9 +32,8 @@ public class ArrayModelImpl extends Model {
         for (int k = 0; k < this.width; ++k) {
           if (j >= height/2)
             world[i][j][k] = new Cube(ORDER.Z, DIRECTION.EAST, ORIENTATION.UP);
-          else
-            world[i][j][k] = new Cube(ORDER.A, DIRECTION.SOUTH_EAST, ORIENTATION.UP);
-
+          else 
+            world[i][j][k] = new Cube(ORDER.D, DIRECTION.SOUTH_WEST, ORIENTATION.UP);
         }
       }
     }

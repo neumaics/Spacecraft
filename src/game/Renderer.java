@@ -63,7 +63,7 @@ public class Renderer {
     
     
     glScalef(2f/m.length, 2f/m.height, 2f/m.width);
-    glTranslatef(-playerPosition.x, -playerPosition.y-.5f, -playerPosition.z);
+    glTranslatef(-playerPosition.x, -playerPosition.y-1.75f, -playerPosition.z);
     
     
 //    drawLight(m.getLightSource());
@@ -84,7 +84,7 @@ public class Renderer {
   public void drawCube(Cube cube, Vector3i position) {
     glPushMatrix();
     glTranslatef(position.x, position.y, position.z);
-    glScalef(.1f,.1f,.1f);
+    glScalef(1f,1f,1f);
     glColor3f(0,1f,0);
     switch(cube.o) {
     case A:
@@ -136,10 +136,241 @@ public class Renderer {
       glEnd();
       break;
     case B:   
+//    	switch(cube.v) {
+//    	case DOWN:
+//    		float[] array = 	{
+//    							1.0f,  0.0f, 0.0f, 1.0f,
+//    							0.0f, -1.0f, 0.0f, 1.0f,
+//    							0.0f,  0.0f, 1.0f, 1.0f,
+//    							1.0f,  1.0f, 1.0f, 1.0f
+//    							};
+//    		ByteBuffer temp = ByteBuffer.allocateDirect(64);
+//    		
+//    		glMultMatrix((FloatBuffer) temp.asFloatBuffer().put(array).flip());
+//    	}
+
+    	switch(cube.d) {
+    		case NORTH_WEST:
+    			glTranslatef(D/2f,0,D/2f);
+    			glRotatef(90,0,1f,0);
+    			glTranslatef(-D/2f,0,-D/2f);
+    			break;
+    		case SOUTH_WEST:
+    			glTranslatef(D/2f,0,D/2f);
+    			glRotatef(180,0,1f,0);
+    			glTranslatef(-D/2f,0,-D/2f);
+    			break;
+    		case SOUTH_EAST:
+    			glTranslatef(D/2f,0,D/2f);
+    			glRotatef(270,0,1f,0);
+    			glTranslatef(-D/2f,0,-D/2f);
+    	}
+    		
+    		
+    		//Draws a Carved Cube with Up Orientation and North East 
+    		glBegin(GL_QUADS);
+    		      // Bottom Face
+    			  glNormal3f(0, -1f, 0);
+    		      glVertex3f(V[3].x, V[3].y, V[3].z);
+    		      glVertex3f(V[7].x, V[7].y, V[7].z);
+    		      glVertex3f(V[4].x, V[4].y, V[4].z);
+    		      glVertex3f(V[0].x, V[0].y, V[0].z);
+    		      
+    		      // South Face
+    		      glNormal3f(-1f, 0, 0);
+    		      glVertex3f(V[0].x, V[0].y, V[0].z);
+    		      glVertex3f(V[4].x, V[4].y, V[4].z);
+    		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glVertex3f(V[1].x, V[1].y, V[1].z);
+
+    		      // West Face
+    		      glNormal3f(0, 0, -1f);
+    		      glVertex3f(V[0].x, V[0].y, V[0].z);
+    		      glVertex3f(V[1].x, V[1].y, V[1].z);
+    		      glVertex3f(V[2].x, V[2].y, V[2].z);
+    		      glVertex3f(V[3].x, V[3].y, V[3].z);
+  
+    		    glEnd();
+    			glBegin(GL_TRIANGLES);
+    			
+    			  // North Triangle
+    			  glNormal3f(1f,0,0);
+    		      glVertex3f(V[2].x, V[2].y, V[2].z);
+    		      glVertex3f(V[7].x, V[7].y, V[7].z);
+    		      glVertex3f(V[3].x, V[3].y, V[3].z);
+    			  
+    		      // East Triangle
+    		      glNormal3f(0, 0, 1f);
+    		      glVertex3f(V[7].x, V[7].y, V[7].z);
+    		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glVertex3f(V[4].x, V[4].y, V[4].z);
+    			
+    			  // Top Triangle
+    		      glNormal3f(0, 1f, 0);
+    		      glVertex3f(V[1].x, V[1].y, V[1].z);
+    		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glVertex3f(V[2].x, V[2].y, V[2].z);
+
+    		      // Top North East Triangle
+    		      glNormal3f(1f,1f,1f);
+    		      glVertex3f(V[2].x, V[2].y, V[2].z);
+    		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glVertex3f(V[7].x, V[7].y, V[7].z);
+
+    		    glEnd();
+      break;
+    case C:
     	switch(cube.v) {
+    	case DOWN:
+    		//TODO: Add Multiplication Matrix for Down
     	case UP:
-    		switch(cube.d) {
-    		case NORTH_EAST:
+        	switch(cube.d) {
+        	case EAST:
+    			glTranslatef(D/2,0,D/2);
+        		glRotatef(270, 0, 1, 0);
+    			glTranslatef(-D/2,0,-D/2);
+        		break;
+        	case WEST:
+    			glTranslatef(D/2,0,D/2);
+        		glRotatef(90,0,1,0);
+    			glTranslatef(-D/2,0,-D/2);
+        	case SOUTH:
+    			glTranslatef(D/2,0,D/2);
+        		glRotatef(180,0,1,0);
+    			glTranslatef(-D/2,0,-D/2);
+        	}
+    	
+        	//Draw Cube with North orientation
+        	glBegin(GL_QUADS);
+
+            // South Face
+            glNormal3f(-1f, 0, 0);
+            glVertex3f(V[0].x, V[0].y, V[0].z);
+            glVertex3f(V[4].x, V[4].y, V[4].z);
+            glVertex3f(V[5].x, V[5].y, V[5].z);
+            glVertex3f(V[1].x, V[1].y, V[1].z);
+           
+            // Bottom Face
+            glNormal3f(0, -1f, 0);
+            glVertex3f(V[3].x, V[3].y, V[3].z);
+            glVertex3f(V[7].x, V[7].y, V[7].z);
+            glVertex3f(V[4].x, V[4].y, V[4].z);
+            glVertex3f(V[0].x, V[0].y, V[0].z);
+
+            //North Up Face
+            glNormal3f(1f, 1f, 0);
+            glVertex3f(V[3].x, V[3].y, V[3].z);
+            glVertex3f(V[7].x, V[7].y, V[7].z);
+            glVertex3f(V[5].x, V[5].y, V[5].z);
+            glVertex3f(V[1].x, V[1].y, V[1].z);
+       
+        	glEnd();
+        	glBegin(GL_TRIANGLES);
+            // East TRIANGLE
+            glNormal3f(0, 0, 1f);
+            glVertex3f(V[7].x, V[7].y, V[7].z);
+            glVertex3f(V[5].x, V[5].y, V[5].z);
+            glVertex3f(V[4].x, V[4].y, V[4].z);
+              	
+		    // West Triangle
+		    glNormal3f(0, 0, -1f);
+		    glVertex3f(V[0].x, V[0].y, V[0].z);
+		    glVertex3f(V[1].x, V[1].y, V[1].z);
+		    glVertex3f(V[3].x, V[3].y, V[3].z);
+        	
+        	glEnd();
+    	}
+    	
+      break;
+    case D:        
+    	switch(cube.d) {
+		case NORTH_WEST:
+			glTranslatef(D/2f,0,D/2f);
+			glRotatef(90,0,1f,0);
+			glTranslatef(-D/2f,0,-D/2f);
+			break;
+		case SOUTH_WEST:
+			glTranslatef(D/2f,0,D/2f);
+			glRotatef(180,0,1f,0);
+			glTranslatef(-D/2f,0,-D/2f);
+			break;
+		case SOUTH_EAST:
+			glTranslatef(D/2f,0,D/2f);
+			glRotatef(270,0,1f,0);
+			glTranslatef(-D/2f,0,-D/2f);
+	}
+
+    glBegin(GL_TRIANGLES);
+    // Bottom Triangle
+    
+    // West Triangle
+    glNormal3f(0, 0, -1f);
+    glVertex3f(V[0].x, V[0].y, V[0].z);
+    glVertex3f(V[1].x, V[1].y, V[1].z);
+    glVertex3f(V[3].x, V[3].y, V[3].z);
+    
+    // South Triangle
+    glNormal3f(-1f, 0, 0);
+    glVertex3f(V[0].x, V[0].y, V[0].z);
+    glVertex3f(V[4].x, V[4].y, V[4].z);
+    glVertex3f(V[1].x, V[1].y, V[1].z);
+    
+    // Bottom Face
+    glNormal3f(0, -1f, 0);
+    glVertex3f(V[3].x, V[3].y, V[3].z);
+    glVertex3f(V[4].x, V[4].y, V[4].z);
+    glVertex3f(V[0].x, V[0].y, V[0].z);
+
+    // Top North East Triangle
+    glNormal3f(1f, 1f, 1f);
+    glVertex3f(V[3].x, V[3].y, V[3].z);
+    glVertex3f(V[1].x, V[1].y, V[1].z);
+    glVertex3f(V[4].x, V[4].y, V[4].z);
+        
+    /*
+		V[0] = new Vector3f(0, 0, 0);
+		V[1] = new Vector3f(0, D, 0);
+		V[2] = new Vector3f(D, D, 0);
+    	V[3] = new Vector3f(D, 0, 0);
+    	V[4] = new Vector3f(0, 0, D);
+    	V[5] = new Vector3f(0, D, D);
+    	V[6] = new Vector3f(D, D, D);
+    	V[7] = new Vector3f(D, 0, D);
+     */
+
+    glEnd();
+    	
+   	break;
+    case Z:
+      //do nothing. It's a void cube.
+      break;
+    }
+
+    glPopMatrix();
+  }
+  
+  public void drawLight(Light light) {
+
+    light.draw();
+	  
+	  temporary.order(ByteOrder.nativeOrder());
+	  glLight(GL_LIGHT0, GL_AMBIENT, (FloatBuffer)temporary.asFloatBuffer().put(light.light_ambient).flip());
+	  glLight(GL_LIGHT0, GL_DIFFUSE, (FloatBuffer)temporary.asFloatBuffer().put(light.light_diffuse).flip());
+	  glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)temporary.asFloatBuffer().put(light.getPosition()).flip());
+	  
+	  glEnable(GL_LIGHT0);
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0f);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0f);
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0f);
+    
+    glEnable(GL_LIGHTING);
+	  	  
+  }
+//  public void rotateCube(Cube)
+}
+
+/*
+ *    		case NORTH_EAST:
     			glBegin(GL_QUADS);
     		      // Bottom Face
     			  glNormal3f(0, -1f, 0);
@@ -241,7 +472,7 @@ public class Renderer {
 		  	      glVertex3f(V[6].x, V[6].y, V[6].z);
 		  	      glVertex3f(V[1].x, V[1].y, V[1].z);
 		  	  			  	      
-  				/*
+  				
     			V[0] = new Vector3f(0, 0, 0);
     			V[1] = new Vector3f(0, D, 0);
     			V[2] = new Vector3f(D, D, 0);
@@ -250,7 +481,7 @@ public class Renderer {
 			    V[5] = new Vector3f(0, D, D);
 			    V[6] = new Vector3f(D, D, D);
 			    V[7] = new Vector3f(D, 0, D);
-    			*/
+    			
 
   		      glEnd();
   				break;
@@ -304,7 +535,7 @@ public class Renderer {
 		  	      glVertex3f(V[6].x, V[6].y, V[6].z);
 		  	      glVertex3f(V[1].x, V[1].y, V[1].z);
 		  	      
-				/*
+				
   				V[0] = new Vector3f(0, 0, 0);
   				V[1] = new Vector3f(0, D, 0);
   				V[2] = new Vector3f(D, D, 0);
@@ -313,7 +544,7 @@ public class Renderer {
 			    V[5] = new Vector3f(0, D, D);
 			    V[6] = new Vector3f(D, D, D);
 			    V[7] = new Vector3f(D, 0, D);
-  			*/
+  			
 
 		        glEnd();
 				break;
@@ -323,57 +554,7 @@ public class Renderer {
     		default:
     			break;
     		}
-    	break;
-    	case DOWN:
-    		switch(cube.d) {
-    		case NORTH_EAST:
-    		
-    			break;
-    		case NORTH_WEST:
-    			
-    			break;
-    		case SOUTH_EAST:
-    			
-    			break;
-    		case SOUTH_WEST:
-    			
-    			break;
-    		default:
-    			break;
-    		}
-    	break;
-    	}
-    	
-    	glEnd();
-      break;
-    case C:
-      break;
-    case D:        
-      break;
-    case Z:
-      //do nothing. It's a void cube.
-      break;
-    }
-
-    glPopMatrix();
-  }
-  
-  public void drawLight(Light light) {
-
-    light.draw();
-	  
-	  temporary.order(ByteOrder.nativeOrder());
-	  glLight(GL_LIGHT0, GL_AMBIENT, (FloatBuffer)temporary.asFloatBuffer().put(light.light_ambient).flip());
-	  glLight(GL_LIGHT0, GL_DIFFUSE, (FloatBuffer)temporary.asFloatBuffer().put(light.light_diffuse).flip());
-	  glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)temporary.asFloatBuffer().put(light.getPosition()).flip());
-	  
-	  glEnable(GL_LIGHT0);
-    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0f);
-    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0f);
-    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0f);
-    
-    glEnable(GL_LIGHTING);
-	  	  
-  }
-//  public void rotateCube(Cube)
-}
+ 
+ * 
+ * 
+*/
