@@ -20,6 +20,8 @@ public abstract class Model {
     this.length = l;
     this.width = w;
     this.height = h;
+    
+    lightSource = new Light(1, 1, 1, 1, 0, 1, 0);
   }
 
   public abstract Cube getCube(Vector3i p);

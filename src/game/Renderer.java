@@ -1,5 +1,9 @@
 package game;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Player;
@@ -11,6 +15,10 @@ public class Renderer {
   private Scene scene;
   private Vector3f V[];
   private static float D = 1f;
+  
+  /* Lighting variables and buffer */
+  private ByteBuffer temporary = ByteBuffer.allocateDirect(16);
+   
   
   public Renderer(){
     initialize();
@@ -29,6 +37,9 @@ public class Renderer {
     V[5] = new Vector3f(0, D, D);
     V[6] = new Vector3f(D, D, D);
     V[7] = new Vector3f(D, 0, D);
+    
+    glEnable(GL_DEPTH_TEST);
+    glShadeModel(GL_FLAT);
   }
   
   public void drawScene() {
@@ -38,6 +49,7 @@ public class Renderer {
   public void render(Model m, Player p){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	Vector3i position;
+	
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
@@ -52,6 +64,9 @@ public class Renderer {
     
     glScalef(2f/m.length, 2f/m.height, 2f/m.width);
     glTranslatef(-playerPosition.x, -playerPosition.y-.5f, -playerPosition.z);
+    
+    
+//    drawLight(m.getLightSource());
     
     for (int i = 0; i < m.length; i++) {
       for (int j = 0; j < m.height; j++) {
@@ -344,10 +359,21 @@ public class Renderer {
   }
   
   public void drawLight(Light light) {
-	  glEnable(GL_LIGHTING);
+
+    light.draw();
+	  
+	  temporary.order(ByteOrder.nativeOrder());
+	  glLight(GL_LIGHT0, GL_AMBIENT, (FloatBuffer)temporary.asFloatBuffer().put(light.light_ambient).flip());
+	  glLight(GL_LIGHT0, GL_DIFFUSE, (FloatBuffer)temporary.asFloatBuffer().put(light.light_diffuse).flip());
+	  glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer)temporary.asFloatBuffer().put(light.getPosition()).flip());
+	  
 	  glEnable(GL_LIGHT0);
-	  
-	  
+    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0f);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0f);
+    glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0f);
+    
+    glEnable(GL_LIGHTING);
+	  	  
   }
 //  public void rotateCube(Cube)
 }
