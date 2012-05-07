@@ -13,6 +13,7 @@ import input.thrower.UserInputThrower;
 import entities.Player;
 
 import scene.ArrayModelImpl;
+import scene.ArrayModelManualImpl;
 import scene.Model;
 
 public class ClientController {
@@ -33,7 +34,7 @@ public class ClientController {
 	   player = new Player();
 
 	   thrower = new UserInputThrower(player,listener);
-	   model = new ArrayModelImpl(20,20,20);
+	   model = new ArrayModelManualImpl(20,20,20);
 	   
 	   engine = new GameEngine();
 	  }
