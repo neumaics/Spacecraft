@@ -35,7 +35,8 @@ public class UserInputThrower extends InputThrower {
 	@Override
 	public void run() {
 		boolean paused = false;
-		Cursor emptyCursor;
+		Cursor origCursor = Mouse.getNativeCursor();
+		Cursor emptyCursor = null;
 		try {
 			emptyCursor = new Cursor(1, 1, 0, 0, 1, BufferUtils.createIntBuffer(1), null);
 			Mouse.setNativeCursor(emptyCursor);
@@ -53,9 +54,22 @@ public class UserInputThrower extends InputThrower {
 
 			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 				paused = true;
+				try {
+					Mouse.setNativeCursor(origCursor);
+				} catch (LWJGLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				Mouse.setCursorPosition(middleX,middleY);
 			}
 			if(Keyboard.isKeyDown(Keyboard.KEY_TAB)) {
 				paused = false;
+				try {
+					Mouse.setNativeCursor(emptyCursor);
+				} catch (LWJGLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				Mouse.setCursorPosition(middleX, middleY);
 			}
 			

@@ -7,7 +7,7 @@ public class Cube {
     NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST; 
   }
   
-  public enum ORIENTATION { UP, DOWN; }
+  public enum ORIENTATION { UP, DOWN, NEUTRAL; }
   
   public ORDER o;
   public DIRECTION d;
