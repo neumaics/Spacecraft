@@ -14,6 +14,7 @@ public abstract class Model {
   public final int length;
   public final int width;
   public final int height;
+  protected Light lightSource;
   
   public Model(int l, int w, int h) {
     this.length = l;
@@ -22,4 +23,13 @@ public abstract class Model {
   }
 
   public abstract Cube getCube(Vector3i p);
+
+public Light getLightSource() {
+	return lightSource;
+}
+
+public void setLightSource(Light lightSource) {
+	this.lightSource = lightSource;
+}
+
 }

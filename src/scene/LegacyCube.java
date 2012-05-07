@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.glVertex3f;
 
 import org.lwjgl.util.vector.Vector3f;
 
-public class LegacyCube implements Node {
+public class LegacyCube implements Drawable {
   private Vector3f V[];
   private static float D = 0.5f; 
   

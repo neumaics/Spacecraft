@@ -1,5 +1,8 @@
 package game;
 
+import org.lwjgl.input.Mouse;
+
+import game.engine.GameEngine;
 import input.ActionEvent;
 import input.LivingEntityInputListener;
 import input.MovementEvent;
@@ -17,6 +20,7 @@ public class ClientController {
   private Renderer renderer;
   private GameScreen display;
   private InputThrower thrower;
+  private GameEngine engine;
   
   private Player player;
   private Model model;
@@ -29,15 +33,17 @@ public class ClientController {
 	   player = new Player();
 
 	   thrower = new UserInputThrower(player,listener);
-	   model = new ArrayModelImpl(20, 20, 20);
+	   model = new ArrayModelImpl(20,20,20);
+	   
+	   engine = new GameEngine();
 	  }
   
   public void start() {
+      Mouse.setCursorPosition(display.getWidth()/2,display.getHeight()/2);
 	  thrower.start();
 
 	  while (!GameScreen.isCloseRequested()) {
       display.update();
-      
       renderer.render(model, player);
       timer.updateFPS();
     }
@@ -55,16 +61,16 @@ public class ClientController {
 
 	@Override
 	public void livingEntityMoved(MovementEvent movementEvent) {
-		System.out.println("Entity Moved!");
+		engine.entityMove(movementEvent.getTarget(),movementEvent.getDirection(), model);
 	}
 
 	@Override
 	public void livingEntityRotated(RotationEvent rotationEvent) {
 		float newDirection = rotationEvent.getTarget().getDirection()+rotationEvent.getDirection();
-		rotationEvent.getTarget().setDirection(newDirection);
+		rotationEvent.getTarget().setDirection(newDirection%360);
 		
 		float newPitch = rotationEvent.getTarget().getPitch()+rotationEvent.getPitch();
-		rotationEvent.getTarget().setPitch(newPitch);
+		rotationEvent.getTarget().setPitch(Math.max(Math.min(newPitch,89),-89));
 	}
 	  
   }

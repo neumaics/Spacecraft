@@ -36,7 +36,8 @@ public class ArrayModelImpl extends Model {
           if (j >= height/2)
             world[i][j][k] = new Cube(ORDER.Z, DIRECTION.EAST, ORIENTATION.UP);
           else
-            world[i][j][k] = new Cube(ORDER.A, DIRECTION.EAST, ORIENTATION.UP);
+            world[i][j][k] = new Cube(ORDER.A, DIRECTION.SOUTH_EAST, ORIENTATION.UP);
+
         }
       }
     }

@@ -1,5 +1,5 @@
 package scene;
 
-public interface Node {
+public interface Drawable {
   public void draw();
 }

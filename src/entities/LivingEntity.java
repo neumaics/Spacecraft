@@ -6,7 +6,7 @@ public class LivingEntity {
 	protected Vector3f position = null;
 	protected float pitch;
 	protected float direction;
-	
+	protected Vector3f movementVector = null;
 	public LivingEntity() {
 		position = new Vector3f(10f,10f,10f);
 		pitch = 0f;

@@ -12,7 +12,7 @@ import entities.LivingEntity;
 
 public abstract class InputThrower implements Runnable {
 
-	private LivingEntity target = null;
+	protected LivingEntity target = null;
 	private LivingEntityInputListener observer = null;
 	private Thread thread = null;
 	public InputThrower(LivingEntity target,LivingEntityInputListener observer) {
