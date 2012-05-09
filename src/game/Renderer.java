@@ -249,32 +249,40 @@ public class Renderer {
     		    glEnd();
       break;
     case C:
-    	switch(cube.v) {
-    	case DOWN:
-    		//TODO: Add Multiplication Matrix for Down
-    	case UP:
-        	switch(cube.d) {
-        	case EAST:
-    			glTranslatef(D/2,0,D/2);
-        		glRotatef(270, 0, 1, 0);
-    			glTranslatef(-D/2,0,-D/2);
-        		break;
-        	case WEST:
-    			glTranslatef(D/2,0,D/2);
-        		glRotatef(90,0,1,0);
-    			glTranslatef(-D/2,0,-D/2);
-        	case SOUTH:
-    			glTranslatef(D/2,0,D/2);
-        		glRotatef(180,0,1,0);
-    			glTranslatef(-D/2,0,-D/2);
-        	}
-    	
-        	//Draw Cube with North orientation
-        	glBegin(GL_QUADS);
+       	switch(cube.d) {
+       	case EAST:
+       	case SOUTH_EAST:
+   			glTranslatef(D/2,0,D/2);
+       		glRotatef(270, 0, 1, 0);
+   			glTranslatef(-D/2,0,-D/2);
+       		break;
+       	case WEST:
+       	case NORTH_WEST:
+   			glTranslatef(D/2,0,D/2);
+       		glRotatef(90,0,1,0);
+   			glTranslatef(-D/2,0,-D/2);
+   			break;
+       	case SOUTH:
+       	case SOUTH_WEST:
+   			glTranslatef(D/2,0,D/2);
+       		glRotatef(180,0,1,0);
+   			glTranslatef(-D/2,0,-D/2);
+   			break;
+       	}
 
+    	switch(cube.v) {
+    	case NEUTRAL: 
+    		glTranslatef(D/2,D/2,D/2);
+    		glRotatef(90, 1, 0, 0);
+			glTranslatef(-D/2,-D/2,-D/2);
+    	
+    	}
+       	
+       	//Draw Cube with North orientation
+       	glBegin(GL_QUADS);
             // South Face
-            glNormal3f(-1f, 0, 0);
-            glVertex3f(V[0].x, V[0].y, V[0].z);
+           glNormal3f(-1f, 0, 0);
+           glVertex3f(V[0].x, V[0].y, V[0].z);
             glVertex3f(V[4].x, V[4].y, V[4].z);
             glVertex3f(V[5].x, V[5].y, V[5].z);
             glVertex3f(V[1].x, V[1].y, V[1].z);
@@ -308,8 +316,6 @@ public class Renderer {
 		    glVertex3f(V[3].x, V[3].y, V[3].z);
         	
         	glEnd();
-    	}
-    	
       break;
     case D:        
     	switch(cube.d) {

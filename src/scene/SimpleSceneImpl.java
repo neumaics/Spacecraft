@@ -75,7 +75,7 @@ public class SimpleSceneImpl extends Model {
 		  world[15][ground+2][16] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
 		  world[15][ground+2][15] = new Cube(ORDER.B,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
 		  world[16][ground+2][15] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
-		  
+		  world[15][ground+1][15] = new Cube(ORDER.C,DIRECTION.NORTH_EAST,ORIENTATION.NEUTRAL);
 	  }
 	
 	  public Cube getCube(Vector3i p) {
