@@ -51,6 +51,8 @@ public class Renderer {
     glEnable(GL_NORMALIZE);
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
+    
+    glClearColor(.53f,.53f,1f,1);
   }
   
   public void drawScene() {
@@ -102,9 +104,21 @@ public class Renderer {
   public void drawCube(Cube cube, Vector3i position) {
     glPushMatrix();
     glTranslatef(position.x, position.y, position.z);
-  //  glScalef(.1f,.1f,.1f);
+//    glScalef(.1f,.1f,.1f);
     glColor3f(0,1f,0);
+
+   	switch(cube.v) {
+	case DOWN:
+		glTranslatef(D/2f,D/2f,D/2f);
+		glScalef(1f,-1f,1f);
+		glTranslatef(-D/2f,-D/2f,-D/2f);
+		break;
+
+   	}
+
+    
     switch(cube.o) {
+   
     case A:
       
       glBegin(GL_QUADS);
@@ -164,19 +178,6 @@ public class Renderer {
       glEnd();
       break;
     case B:   
-//    	switch(cube.v) {
-//    	case DOWN:
-//    		float[] array = 	{
-//    							1.0f,  0.0f, 0.0f, 1.0f,
-//    							0.0f, -1.0f, 0.0f, 1.0f,
-//    							0.0f,  0.0f, 1.0f, 1.0f,
-//    							1.0f,  1.0f, 1.0f, 1.0f
-//    							};
-//    		ByteBuffer temp = ByteBuffer.allocateDirect(64);
-//    		
-//    		glMultMatrix((FloatBuffer) temp.asFloatBuffer().put(array).flip());
-//    	}
-
     	switch(cube.d) {
     		case NORTH_WEST:
     			glTranslatef(D/2f,0,D/2f);
