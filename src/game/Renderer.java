@@ -6,9 +6,11 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.newdawn.slick.opengl.Texture;
 
 import entities.Player;
 import scene.*;
+import texture.TextureBank;
 import util.Vector3i;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -19,7 +21,7 @@ public class Renderer {
   private Matrix4f modelviewmatrix;
   private FloatBuffer MvMBuffer = ByteBuffer.allocateDirect(64).order(ByteOrder.nativeOrder()).asFloatBuffer();
   private Matrix4f inversemodelviewmatrix;
-  
+  private TextureBank textureBank;
   
   /* Lighting variables and buffer */
   private Light light;
@@ -53,6 +55,9 @@ public class Renderer {
     glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
     
     glClearColor(.53f,.53f,1f,1);
+    textureBank = TextureBank.Instance();
+    
+    glEnable(GL_TEXTURE_2D);    
   }
   
   public void drawScene() {
@@ -81,6 +86,7 @@ public class Renderer {
     // y axis
     glRotatef(p.getDirection(),0f,1f,0f);
     
+    m.getLightSource().initialize();
     
     glScalef(2f/m.length, 2f/m.height, 2f/m.width);
     glTranslatef(-playerPosition.x, -playerPosition.y-1.75f, -playerPosition.z);
@@ -102,10 +108,13 @@ public class Renderer {
   }
   
   public void drawCube(Cube cube, Vector3i position) {
+	Texture texture = textureBank.getTexture(cube.m);
+	if(texture!=null)texture.bind();
+	
     glPushMatrix();
     glTranslatef(position.x, position.y, position.z);
 //    glScalef(.1f,.1f,.1f);
-    glColor3f(0,1f,0);
+//    glColor3f(0,.5f,0);
 
    	switch(cube.v) {
 	case DOWN:
@@ -135,44 +144,68 @@ public class Renderer {
        */
       // West Face
       glNormal3f(0, 0, -1f);
+      glTexCoord2f(1f,0f);
       glVertex3f(V[0].x, V[0].y, V[0].z);
+      glTexCoord2f(1f,1f);
       glVertex3f(V[1].x, V[1].y, V[1].z);
+      glTexCoord2f(0f,1f);
       glVertex3f(V[2].x, V[2].y, V[2].z);
+      glTexCoord2f(0f,0f);
       glVertex3f(V[3].x, V[3].y, V[3].z);
      
       // East Face
       glNormal3f(0, 0, 1f);
+      glTexCoord2f(1f,0f);
       glVertex3f(V[7].x, V[7].y, V[7].z);
+      glTexCoord2f(1f,1f);
       glVertex3f(V[6].x, V[6].y, V[6].z);
+      glTexCoord2f(0f,1f);
       glVertex3f(V[5].x, V[5].y, V[5].z);
+      glTexCoord2f(0f,0f);
       glVertex3f(V[4].x, V[4].y, V[4].z);
       
       // North Face
       glNormal3f(1f, 0, 0);
+      glTexCoord2f(1f,0f);
       glVertex3f(V[2].x, V[2].y, V[2].z);
+      glTexCoord2f(1f,1f);
       glVertex3f(V[6].x, V[6].y, V[6].z);
+      glTexCoord2f(0f,1f);
       glVertex3f(V[7].x, V[7].y, V[7].z);
+      glTexCoord2f(0f,0f);
       glVertex3f(V[3].x, V[3].y, V[3].z);
 
       // South Face
       glNormal3f(-1f, 0, 0);
+      glTexCoord2f(1f,0f);
       glVertex3f(V[0].x, V[0].y, V[0].z);
+      glTexCoord2f(1f,1f);
       glVertex3f(V[4].x, V[4].y, V[4].z);
+      glTexCoord2f(0f,1f);
       glVertex3f(V[5].x, V[5].y, V[5].z);
+      glTexCoord2f(0f,0f);
       glVertex3f(V[1].x, V[1].y, V[1].z);
 
       // Top Face
       glNormal3f(0, 1f, 0);
+      glTexCoord2f(1f,0f);
       glVertex3f(V[1].x, V[1].y, V[1].z);
+      glTexCoord2f(1f,1f);
       glVertex3f(V[5].x, V[5].y, V[5].z);
+      glTexCoord2f(0f,1f);
       glVertex3f(V[6].x, V[6].y, V[6].z);
+      glTexCoord2f(0f,0f);
       glVertex3f(V[2].x, V[2].y, V[2].z);
      
       // Bottom Face
       glNormal3f(0, -1f, 0);
+      glTexCoord2f(1f,0f);
       glVertex3f(V[3].x, V[3].y, V[3].z);
+      glTexCoord2f(1f,1f);
       glVertex3f(V[7].x, V[7].y, V[7].z);
+      glTexCoord2f(0f,1f);
       glVertex3f(V[4].x, V[4].y, V[4].z);
+      glTexCoord2f(0f,0f);
       glVertex3f(V[0].x, V[0].y, V[0].z);
      
       glEnd();
@@ -200,23 +233,35 @@ public class Renderer {
     		glBegin(GL_QUADS);
     		      // Bottom Face
     			  glNormal3f(0, -1f, 0);
+    		      glTexCoord2f(1f,0f);
     		      glVertex3f(V[3].x, V[3].y, V[3].z);
+    		      glTexCoord2f(1f,1f);
     		      glVertex3f(V[7].x, V[7].y, V[7].z);
+    		      glTexCoord2f(0f,1f);
     		      glVertex3f(V[4].x, V[4].y, V[4].z);
+    		      glTexCoord2f(0f,0f);
     		      glVertex3f(V[0].x, V[0].y, V[0].z);
     		      
     		      // South Face
     		      glNormal3f(-1f, 0, 0);
+    		      glTexCoord2f(1f,0f);
     		      glVertex3f(V[0].x, V[0].y, V[0].z);
+    		      glTexCoord2f(1f,1f);
     		      glVertex3f(V[4].x, V[4].y, V[4].z);
+    		      glTexCoord2f(0f,1f);
     		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glTexCoord2f(0f,0f);
     		      glVertex3f(V[1].x, V[1].y, V[1].z);
 
     		      // West Face
     		      glNormal3f(0, 0, -1f);
+    		      glTexCoord2f(1f,0f);
     		      glVertex3f(V[0].x, V[0].y, V[0].z);
+    		      glTexCoord2f(1f,1f);
     		      glVertex3f(V[1].x, V[1].y, V[1].z);
+    		      glTexCoord2f(0f,1f);
     		      glVertex3f(V[2].x, V[2].y, V[2].z);
+    		      glTexCoord2f(0f,0f);
     		      glVertex3f(V[3].x, V[3].y, V[3].z);
   
     		    glEnd();
@@ -224,26 +269,38 @@ public class Renderer {
     			
     			  // North Triangle
     			  glNormal3f(1f,0,0);
+    		      glTexCoord2f(1f,1f);
     		      glVertex3f(V[2].x, V[2].y, V[2].z);
+    		      glTexCoord2f(0f,0f);
     		      glVertex3f(V[7].x, V[7].y, V[7].z);
+    		      glTexCoord2f(1f,0f);
     		      glVertex3f(V[3].x, V[3].y, V[3].z);
     			  
     		      // East Triangle
     		      glNormal3f(0, 0, 1f);
+    		      glTexCoord2f(1f,1f);
     		      glVertex3f(V[7].x, V[7].y, V[7].z);
+    		      glTexCoord2f(0f,0f);
     		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glTexCoord2f(1f,0f);
     		      glVertex3f(V[4].x, V[4].y, V[4].z);
     			
     			  // Top Triangle
     		      glNormal3f(0, 1f, 0);
+    		      glTexCoord2f(0f,1f);
     		      glVertex3f(V[1].x, V[1].y, V[1].z);
+    		      glTexCoord2f(0f,0f);
     		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glTexCoord2f(1f,1f);
     		      glVertex3f(V[2].x, V[2].y, V[2].z);
 
     		      // Top North East Triangle
     		      glNormal3f(1f,1f,1f);
+    		      glTexCoord2f(0f,1f);
     		      glVertex3f(V[2].x, V[2].y, V[2].z);
+    		      glTexCoord2f(.5f,0f);
     		      glVertex3f(V[5].x, V[5].y, V[5].z);
+    		      glTexCoord2f(1f,1f);
     		      glVertex3f(V[7].x, V[7].y, V[7].z);
 
     		    glEnd();
@@ -282,37 +339,55 @@ public class Renderer {
        	glBegin(GL_QUADS);
             // South Face
            glNormal3f(-1f, 0, 0);
+		   glTexCoord2f(1f,0f);
            glVertex3f(V[0].x, V[0].y, V[0].z);
-            glVertex3f(V[4].x, V[4].y, V[4].z);
-            glVertex3f(V[5].x, V[5].y, V[5].z);
-            glVertex3f(V[1].x, V[1].y, V[1].z);
+		   glTexCoord2f(1f,1f);
+           glVertex3f(V[4].x, V[4].y, V[4].z);
+		   glTexCoord2f(0f,1f);
+           glVertex3f(V[5].x, V[5].y, V[5].z);
+		   glTexCoord2f(0f,0f);
+           glVertex3f(V[1].x, V[1].y, V[1].z);
            
             // Bottom Face
             glNormal3f(0, -1f, 0);
-            glVertex3f(V[3].x, V[3].y, V[3].z);
-            glVertex3f(V[7].x, V[7].y, V[7].z);
-            glVertex3f(V[4].x, V[4].y, V[4].z);
-            glVertex3f(V[0].x, V[0].y, V[0].z);
+ 		   glTexCoord2f(1f,0f);
+           glVertex3f(V[3].x, V[3].y, V[3].z);
+ 		   glTexCoord2f(1f,1f);
+           glVertex3f(V[7].x, V[7].y, V[7].z);
+ 		   glTexCoord2f(0f,1f);
+           glVertex3f(V[4].x, V[4].y, V[4].z);
+ 		   glTexCoord2f(0f,0f);
+           glVertex3f(V[0].x, V[0].y, V[0].z);
 
             //North Up Face
             glNormal3f(1f, 1f, 0);
+ 		   glTexCoord2f(1f,0f);
             glVertex3f(V[3].x, V[3].y, V[3].z);
+ 		   glTexCoord2f(1f,1f);
             glVertex3f(V[7].x, V[7].y, V[7].z);
+ 		   glTexCoord2f(0f,1f);
             glVertex3f(V[5].x, V[5].y, V[5].z);
+ 		   glTexCoord2f(0f,0f);
             glVertex3f(V[1].x, V[1].y, V[1].z);
        
         	glEnd();
         	glBegin(GL_TRIANGLES);
             // East TRIANGLE
             glNormal3f(0, 0, 1f);
+   		   glTexCoord2f(1f,0f);
             glVertex3f(V[7].x, V[7].y, V[7].z);
+   		   glTexCoord2f(0f,1f);
             glVertex3f(V[5].x, V[5].y, V[5].z);
+   		   glTexCoord2f(0f,0f);
             glVertex3f(V[4].x, V[4].y, V[4].z);
               	
 		    // West Triangle
 		    glNormal3f(0, 0, -1f);
+	  		   glTexCoord2f(1f,0f);
 		    glVertex3f(V[0].x, V[0].y, V[0].z);
+	  		   glTexCoord2f(1f,1f);
 		    glVertex3f(V[1].x, V[1].y, V[1].z);
+	  		   glTexCoord2f(0f,0f);
 		    glVertex3f(V[3].x, V[3].y, V[3].z);
         	
         	glEnd();
@@ -340,26 +415,38 @@ public class Renderer {
     
     // West Triangle
     glNormal3f(0, 0, -1f);
+	   glTexCoord2f(1f,0f);
     glVertex3f(V[0].x, V[0].y, V[0].z);
+	   glTexCoord2f(1f,1f);
     glVertex3f(V[1].x, V[1].y, V[1].z);
+	   glTexCoord2f(0f,0f);
     glVertex3f(V[3].x, V[3].y, V[3].z);
     
     // South Triangle
     glNormal3f(-1f, 0, 0);
+	   glTexCoord2f(0f,0f);
     glVertex3f(V[0].x, V[0].y, V[0].z);
+	   glTexCoord2f(1f,0f);
     glVertex3f(V[4].x, V[4].y, V[4].z);
+	   glTexCoord2f(0f,1f);
     glVertex3f(V[1].x, V[1].y, V[1].z);
     
     // Bottom Face
     glNormal3f(0, -1f, 0);
+	   glTexCoord2f(0f,0f);
     glVertex3f(V[3].x, V[3].y, V[3].z);
+	   glTexCoord2f(1f,1f);
     glVertex3f(V[4].x, V[4].y, V[4].z);
+	   glTexCoord2f(0f,1f);
     glVertex3f(V[0].x, V[0].y, V[0].z);
 
     // Top North East Triangle
     glNormal3f(1f, 1f, 1f);
+	   glTexCoord2f(0f,0f);
     glVertex3f(V[3].x, V[3].y, V[3].z);
+	   glTexCoord2f(.5f,1f);
     glVertex3f(V[1].x, V[1].y, V[1].z);
+	   glTexCoord2f(1f,0f);
     glVertex3f(V[4].x, V[4].y, V[4].z);
         
     /*

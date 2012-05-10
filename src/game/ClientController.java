@@ -16,6 +16,7 @@ import scene.ArrayModelImpl;
 import scene.ArrayModelManualImpl;
 import scene.Model;
 import scene.SimpleSceneImpl;
+import texture.TextureBank;
 
 public class ClientController {
   private Timer timer;
@@ -28,7 +29,12 @@ public class ClientController {
   private Model model;
   public ClientController() {
 	   display = new GameScreen.Builder("Spacecraft").build();
-	    
+	   
+	   TextureBank bank = TextureBank.Instance();
+	   bank.loadTexture("resources/grass.png", Material.GRASS);
+	   bank.loadTexture("resources/dirt.png", Material.DIRT);
+	   
+	   
 	   timer = new Timer();
 	   renderer = new Renderer();
 	   LivingEntityInputListener listener = new UserInputListener();

@@ -26,7 +26,7 @@ public class Light implements Drawable {
 
   private Color color;
   private float[] position;
-  public final float[] light_ambient = { .2f, .2f, .2f, 1.0f };
+  public final float[] light_ambient = { .4f, .4f, .4f, 1.0f };
   public final float[] light_diffuse = { 1f, 1f, 1f, 1.0f };
   public final float[] light_specular = { 0, 0, 0, 1.0f };
 
@@ -83,7 +83,7 @@ public class Light implements Drawable {
     
     glEnable(GL_LIGHT0);
     glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1.0f);
-    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.0f);
+    glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.1f);
     glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0f);
     
     glEnable(GL_LIGHTING);

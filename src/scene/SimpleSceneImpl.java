@@ -1,5 +1,7 @@
 package scene;
 
+import game.Material;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,42 +42,42 @@ public class SimpleSceneImpl extends Model {
 		  int ground = height/2;
 		  for(int i = 0;i<2;i++) {
 			  for(int j = 0;j<2;j++) {
-				  world[i][ground+1][j] = new Cube(ORDER.A, DIRECTION.SOUTH_WEST, ORIENTATION.UP); 
+				  world[i][ground+1][j] = new Cube(ORDER.A, DIRECTION.SOUTH_WEST, ORIENTATION.UP,Material.GRASS); 
 			  }
 		  }
 		  
 		  for(int i = 0;i<4;i++) {
 			  for(int j = 0;j<5;j++) {
-				  world[i][ground][j] = new Cube(ORDER.A, DIRECTION.SOUTH_WEST, ORIENTATION.UP); 
+				  world[i][ground][j] = new Cube(ORDER.A, DIRECTION.SOUTH_WEST, ORIENTATION.UP,Material.GRASS); 
 			  }
 		  }
-		  world[2][ground+1][0] = new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP);
-		  world[2][ground+1][1] = new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP);
-		  world[2][ground+1][2] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP);
-		  world[0][ground+1][2] = new Cube(ORDER.A,DIRECTION.NORTH_EAST,ORIENTATION.UP);
-		  world[1][ground+1][2] = new Cube(ORDER.B,DIRECTION.NORTH_EAST,ORIENTATION.UP);
-		  world[1][ground+1][3] = new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP);
-		  world[0][ground+1][3] = new Cube(ORDER.A,DIRECTION.NORTH,ORIENTATION.UP);
-		  world[1][ground+1][4] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP);
-		  world[0][ground+1][4] = new Cube(ORDER.C,DIRECTION.EAST,ORIENTATION.UP);
+		  world[2][ground+1][0] = new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP,Material.GRASS);
+		  world[2][ground+1][1] = new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP,Material.GRASS);
+		  world[2][ground+1][2] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP,Material.GRASS);
+		  world[0][ground+1][2] = new Cube(ORDER.A,DIRECTION.NORTH_EAST,ORIENTATION.UP,Material.GRASS);
+		  world[1][ground+1][2] = new Cube(ORDER.B,DIRECTION.NORTH_EAST,ORIENTATION.UP,Material.GRASS);
+		  world[1][ground+1][3] = new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP,Material.GRASS);
+		  world[0][ground+1][3] = new Cube(ORDER.A,DIRECTION.NORTH,ORIENTATION.UP,Material.GRASS);
+		  world[1][ground+1][4] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP,Material.GRASS);
+		  world[0][ground+1][4] = new Cube(ORDER.C,DIRECTION.EAST,ORIENTATION.UP,Material.GRASS);
 
 		  for(int i = 0;i<3;i++) {
-			  world[i][ground][5] = new Cube(ORDER.C,DIRECTION.EAST,ORIENTATION.UP);
+			  world[i][ground][5] = new Cube(ORDER.C,DIRECTION.EAST,ORIENTATION.UP,Material.GRASS);
 		  }
 		  
-		  world[3][ground][5] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP);
-		  world[3][ground][4] = new Cube(ORDER.B,DIRECTION.NORTH_EAST,ORIENTATION.UP);
+		  world[3][ground][5] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP,Material.GRASS);
+		  world[3][ground][4] = new Cube(ORDER.B,DIRECTION.NORTH_EAST,ORIENTATION.UP,Material.GRASS);
 		  
-		  world[4][ground][4] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP);
+		  world[4][ground][4] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP,Material.GRASS);
 		  
 		  for(int i = 0;i<4;i++) {
-			  world[4][ground][i]=new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP);
+			  world[4][ground][i]=new Cube(ORDER.C,DIRECTION.NORTH,ORIENTATION.UP,Material.GRASS);
 		  }
 		  
-		  world[15][ground+2][16] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
-		  world[15][ground+2][15] = new Cube(ORDER.B,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
-		  world[16][ground+2][15] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
-		  world[15][ground+1][15] = new Cube(ORDER.C,DIRECTION.NORTH_EAST,ORIENTATION.NEUTRAL);
+//		  world[15][ground+2][16] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
+//		  world[15][ground+2][15] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.UP);
+//		  world[16][ground+2][15] = new Cube(ORDER.D,DIRECTION.NORTH_EAST,ORIENTATION.DOWN);
+//		  world[15][ground+1][15] = new Cube(ORDER.C,DIRECTION.NORTH_EAST,ORIENTATION.NEUTRAL);
 	  }
 	
 	  public Cube getCube(Vector3i p) {
