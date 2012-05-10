@@ -36,7 +36,7 @@ public class TerrainGenerator {
   public int[][] generateHeightMap(int max_height) {
     generate(0, 0, terrain_width  - 1, terrain_height - 1);
     
-    smooth();
+    smooth(5);
     
     int[][] height_map = new int[terrain_width-1][terrain_height-1];
     
@@ -98,11 +98,14 @@ public class TerrainGenerator {
       generate(x0 + mpx, y0 + mpy, x1, y1);
     }
   }
+
+  private void smooth(int times) {
+    for (int i = 0; i < times; ++i)
+      smooth();
+  }
   
   private void smooth() {
     double x;
-
-    // ConvolveOp p;
 
     for (int i = 0; i < terrain_width-1; ++i) {
       for (int j = 0; j < terrain_height-1; ++j) {
@@ -111,7 +114,7 @@ public class TerrainGenerator {
             + getValue(i - 1, j - 1) * 1 + getValue(i + 0, j - 1) * 1 + getValue(i + 1, j - 1) * 1;
 
         x = x / 9d;
-
+        
         smoothed[i][j] = x;
       }
     }
