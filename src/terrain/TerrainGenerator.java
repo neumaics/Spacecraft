@@ -6,8 +6,9 @@ public class TerrainGenerator {
   private Random r;
   private int terrain_width;
   private int terrain_height;
-  private final double e = 0.125;
+  private final double e = 0.25;
   private double[][] mask;
+  private double[][] smoothed;
   
   public TerrainGenerator(int width, int height) {
     r = new Random();
@@ -15,24 +16,33 @@ public class TerrainGenerator {
     terrain_width = width + 1;
     terrain_height = height + 1;
         
-    mask = new double[terrain_width][];
-    for (int i = 0; i < terrain_width; ++i) {
-      mask[i] = new double[terrain_height];
-      for (int j = 0; j < terrain_height; ++j) {
+    mask = new double[terrain_width+2][];
+    for (int i = 0; i < terrain_width+2; ++i) {
+      mask[i] = new double[terrain_height+2];
+      for (int j = 0; j < terrain_height+2; ++j) {
         mask[i][j] = -1.0;
+      }
+    }
+    
+    smoothed = new double[width][];
+    for (int i = 0; i < width; ++i) {
+      smoothed[i] = new double[height];
+      for (int j = 0; j < height; ++j) {
+        smoothed[i][j] = -1.0;
       }
     }
   }
   
   public int[][] generateHeightMap(int max_height) {
-    log(terrain_width);
     generate(0, 0, terrain_width  - 1, terrain_height - 1);
+    
+    smooth();
     
     int[][] height_map = new int[terrain_width-1][terrain_height-1];
     
     for (int i = 0; i < terrain_width - 1; ++i) {
       for (int j = 0; j < terrain_height - 1; ++j) {
-        height_map[i][j] = (int)Math.floor((mask[i][j]/2) * max_height) + (max_height/4);
+        height_map[i][j] = (int)Math.floor((smoothed[i][j]) * max_height) + (max_height/4);
       }
     }
     
@@ -87,6 +97,51 @@ public class TerrainGenerator {
       generate(x0, y0 + mpy, x0 + mpx, y1);
       generate(x0 + mpx, y0 + mpy, x1, y1);
     }
+  }
+  
+  private void smooth() {
+    double x;
+
+    // ConvolveOp p;
+
+    for (int i = 0; i < terrain_width-1; ++i) {
+      for (int j = 0; j < terrain_height-1; ++j) {
+        x = getValue(i - 1, j + 1) * 1 + getValue(i + 0, j + 1) * 1 + getValue(i + 1, j + 1) * 1
+            + getValue(i - 1, j + 0) * 1 + getValue(i + 0, j + 0) * 1 + getValue(i + 1, j + 0) * 1
+            + getValue(i - 1, j - 1) * 1 + getValue(i + 0, j - 1) * 1 + getValue(i + 1, j - 1) * 1;
+
+        x = x / 9d;
+
+        smoothed[i][j] = x;
+      }
+    }
+
+    for (int i = 1; i < terrain_width - 2; ++i) {
+      for (int j = 1; j < terrain_width - 2; ++j) {
+        mask[i][j] = smoothed[i][j];
+      }
+    }  
+  }
+  
+  public double getValue(int i, int j) {
+    if (i < 0){
+      i = 0;
+    }
+    
+    if (i > mask.length - 1) {
+      i = mask.length - 1;
+    }
+    
+    if (j < 0) {
+      j = 0;
+    }
+    
+    if (j > mask[0].length - 1) {
+      j = mask[0].length - 1;
+    }
+    
+    
+    return mask[i][j];
   }
   
   public void log(Object o) {
