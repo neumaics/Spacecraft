@@ -1,5 +1,6 @@
 package scene;
 
+import game.Material;
 import scene.Cube.DIRECTION;
 import scene.Cube.ORDER;
 import scene.Cube.ORIENTATION;
@@ -37,7 +38,10 @@ public class ArrayModelImpl extends Model {
       for (int k = 0; k < this.width; ++k) {
         System.out.println(height_map[i][j]);
         if (j < height_map[i][k])
-          world[i][j][k] = new Cube(ORDER.A, DIRECTION.EAST, ORIENTATION.UP);
+          if (j + 2 < height_map[i][k])
+            world[i][j][k] = new Cube(ORDER.A, DIRECTION.EAST, ORIENTATION.UP, Material.DIRT);
+          else
+            world[i][j][k] = new Cube(ORDER.A, DIRECTION.EAST, ORIENTATION.UP, Material.GRASS);
         else 
           world[i][j][k] = new Cube(ORDER.Z, DIRECTION.SOUTH_WEST, ORIENTATION.UP);
       }
