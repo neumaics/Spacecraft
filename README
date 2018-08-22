@@ -2,3 +2,9 @@
 
 This repository holds the project files for the Advanced Graphics, 
 Spring 2012 project, Spacecraft.
+
+The main file to run is GameController.java.
+
+In order to run this through IntelliJ (on Windows), you need to create a Run Configuration and specify the following VM Options:
+-Djava.library.path=lib/lwjgl-2.8.3/lwjgl-2.8.3/native/windows
+
